@@ -49,7 +49,7 @@ export const Connect = () => {
     };
 
     return (
-        <section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <section id="connect" className="min-h-screen flex items-center px-6 md:px-12 py-16 md:py-32">
             <div className="max-w-6xl mx-auto w-full">
                 <ScrollReveal>
                     <div className="mb-16">
@@ -58,8 +58,8 @@ export const Connect = () => {
                             CONNECT
                         </h2>
                         <p className="font-body text-lg text-light-grey mt-6 max-w-2xl">
-                            Got a cool project? Want to chat about tech, AI, cars, or coffee? Hit me up.
-                            I'm always down for interesting conversations.
+                            Always down to talk about tech, AI, or cars.
+                            Drop me a line if you've got a cool project in mind or just want to talk shop over a coffee.
                         </p>
                     </div>
                 </ScrollReveal>

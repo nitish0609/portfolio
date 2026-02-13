@@ -1,18 +1,37 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { useDebug } from '../context/DebugContext';
 
 export const CustomCursor = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const { isDebugMode } = useDebug();
     const [isHovering, setIsHovering] = useState(false);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const cursorRef = useRef<HTMLDivElement>(null);
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
         const updateMousePosition = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
 
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.classList.contains('cursor-hover')) {
+            if (
+                target.tagName === 'A' ||
+                target.tagName === 'BUTTON' ||
+                target.classList.contains('cursor-hover') ||
+                target.closest('a') ||
+                target.closest('button')
+            ) {
                 setIsHovering(true);
             }
         };
@@ -32,41 +51,62 @@ export const CustomCursor = () => {
         };
     }, []);
 
-    return (
-        <>
-            {/* Main cursor dot */}
-            <motion.div
-                className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-50"
-                animate={{
-                    x: mousePosition.x - 4,
-                    y: mousePosition.y - 4,
-                    scale: isHovering ? 0 : 1,
-                }}
-                transition={{
-                    type: 'spring',
-                    stiffness: 800, // Faster stiffness
-                    damping: 35,
-                    mass: 0.2, // Lighter mass for less lag
-                }}
-                style={{ translateX: '-50%', translateY: '-50%' }}
-            />
+    if (isTouchDevice) return null;
 
-            {/* Cursor ring */}
+    return (
+        <div className="fixed inset-0 pointer-events-none z-[9999]">
+            {/* Jelly Cursor Main */}
             <motion.div
-                className="fixed top-0 left-0 w-8 h-8 border border-accent rounded-full pointer-events-none z-50"
-                animate={{
-                    x: mousePosition.x - 16,
-                    y: mousePosition.y - 16,
-                    scale: isHovering ? 2 : 1, // Larger pop for better feedback
+                ref={cursorRef}
+                style={{
+                    x: springX,
+                    y: springY,
+                    translateX: '-50%',
+                    translateY: '-50%',
                 }}
-                transition={{
-                    type: 'spring',
-                    stiffness: 400,
-                    damping: 25,
-                    mass: 0.3,
+                className="fixed top-0 left-0 mix-blend-difference"
+            >
+                <motion.div
+                    animate={{
+                        width: isHovering ? 80 : 12,
+                        height: isHovering ? 80 : 12,
+                        backgroundColor: isDebugMode ? 'rgba(0, 0, 0, 0.8)' : (isHovering ? 'rgba(191, 255, 0, 0.4)' : '#BFFF00'),
+                        borderRadius: isDebugMode ? '2px' : '50%',
+                    }}
+                    transition={{
+                        type: 'spring',
+                        damping: 20,
+                        stiffness: 150,
+                    }}
+                    className={`flex items-center justify-center border ${isDebugMode ? 'border-accent text-accent' : 'border-accent/30'}`}
+                >
+                    {isHovering && !isDebugMode && (
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="w-2 h-2 bg-accent rounded-full"
+                        />
+                    )}
+                    {isDebugMode && (
+                        <div className="font-mono text-[6px] tabular-nums flex flex-col items-center">
+                            <span>{Math.round(mouseX.get())}</span>
+                            <div className="w-4 h-[1px] bg-accent/30 my-[1px]" />
+                            <span>{Math.round(mouseY.get())}</span>
+                        </div>
+                    )}
+                </motion.div>
+            </motion.div>
+
+            {/* Subtle trailing dot */}
+            <motion.div
+                style={{
+                    x: mouseX,
+                    y: mouseY,
+                    translateX: '-50%',
+                    translateY: '-50%',
                 }}
-                style={{ translateX: '-50%', translateY: '-50%' }}
+                className="fixed top-0 left-0 w-1 h-1 bg-accent rounded-full opacity-40"
             />
-        </>
+        </div>
     );
 };

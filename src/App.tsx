@@ -11,6 +11,7 @@ import { ScrollProgress } from './components/ScrollProgress';
 import { Spotlight } from './components/Spotlight';
 import { DebugProvider } from './context/DebugContext';
 import { DebugToggle } from './components/DebugToggle';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
             <About />
             <Gallery />
             <Connect />
+            <Analytics />
         </DebugProvider>
     );
 }

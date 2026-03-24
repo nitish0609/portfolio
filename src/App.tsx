@@ -10,6 +10,8 @@ import { DebugProvider } from './context/DebugContext';
 import { DebugToggle } from './components/DebugToggle';
 import { Preloader } from './components/Preloader';
 import { Navigation } from './components/Navigation';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Mastery } from './sections/Mastery';
@@ -42,6 +44,8 @@ function App() {
                     <Playground />
                     <Gallery />
                     <Connect />
+                    <Analytics />
+                    <SpeedInsights />
                 </>
             )}
         </DebugProvider>

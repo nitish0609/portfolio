@@ -185,7 +185,7 @@ export const Hero = () => {
             </div>
 
             {/* Unified Responsive Header */}
-            <div className="absolute top-6 left-6 right-6 md:top-8 md:left-12 md:right-12 z-20 pointer-events-none flex flex-row items-center justify-between">
+            <div className="absolute top-6 left-6 right-6 md:top-8 md:left-8 md:right-8 z-20 pointer-events-none flex flex-row items-center justify-between">
                 {/* Left Side: Badge */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -202,8 +202,8 @@ export const Hero = () => {
                     </span>
                 </motion.div>
 
-                {/* Right Side: Clock + Location (Clock only on mobile, Both on desktop) */}
-                <div className="flex flex-col items-end gap-0.5 md:gap-1 mr-12 md:mr-0">
+                {/* Right Side: Clock + Location (Clock only on mobile/tablet, Both on desktop) */}
+                <div className="flex flex-col items-end gap-0.5 md:gap-1 mr-12 lg:mr-0">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -265,7 +265,7 @@ export const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="font-display text-7xl sm:text-[10rem] md:text-[12rem] lg:text-[14rem] leading-none text-off-white flex gap-2 md:gap-4 overflow-visible"
+                        className="font-display text-7xl sm:text-8xl md:text-8xl lg:text-[10rem] xl:text-[14rem] leading-none text-off-white flex gap-2 md:gap-4 overflow-visible"
                     >
                         {firstCharArr.map((c, i) => (
                             <MagneticCharacter key={i} char={c} index={i} />
@@ -276,7 +276,7 @@ export const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        className="font-display text-7xl sm:text-[10rem] md:text-[12rem] lg:text-[14rem] leading-none text-outline ml-0 md:ml-24 flex gap-2 md:gap-4 overflow-visible"
+                        className="font-display text-7xl sm:text-8xl md:text-8xl lg:text-[10rem] xl:text-[14rem] leading-none text-outline ml-0 md:ml-4 lg:ml-24 flex gap-2 md:gap-4 overflow-visible"
                     >
                         {secondCharArr.map((c, i) => (
                             <MagneticCharacter key={i} char={c} index={i} />

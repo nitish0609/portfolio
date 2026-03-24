@@ -44,7 +44,7 @@ export const Navigation = () => {
                 initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden md:flex items-center gap-1 px-3 py-2 rounded-full border transition-all duration-500 ${scrolled
+                className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden lg:flex items-center gap-1 px-3 py-2 rounded-full border transition-all duration-500 ${scrolled
                     ? 'bg-pure-black/90 border-mid-grey/60 backdrop-blur-md shadow-[0_0_30px_rgba(191,255,0,0.06)]'
                     : 'bg-transparent border-transparent'
                     }`}
@@ -69,7 +69,7 @@ export const Navigation = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 onClick={() => setOpen(v => !v)}
-                className="fixed top-6 right-6 z-[200] md:hidden w-11 h-11 flex flex-col items-center justify-center gap-[5px] cursor-hover group"
+                className="fixed top-6 right-6 z-[200] lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-[5px] cursor-hover group"
                 aria-label="Toggle menu"
             >
                 <motion.span
@@ -98,7 +98,7 @@ export const Navigation = () => {
                         animate={{ opacity: 1, clipPath: 'circle(150% at calc(100% - 40px) 40px)' }}
                         exit={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
                         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="fixed inset-0 z-[150] bg-pure-black flex flex-col items-start justify-center px-10 md:hidden"
+                        className="fixed inset-0 z-[150] bg-pure-black flex flex-col items-start justify-center px-10 lg:hidden"
                     >
                         <div
                             className="absolute inset-0 opacity-[0.03]"

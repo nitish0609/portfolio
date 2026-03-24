@@ -337,35 +337,62 @@ const DrawingCanvas = () => {
     const colors = ['#BFFF00', '#FAFAFA', '#FF4444', '#4488FF', '#FF44FF', '#44FFFF'];
 
     return (
-        <div className="relative border border-mid-grey overflow-hidden">
-            <div className="absolute top-4 left-4 z-10 flex items-center gap-3">
-                <span className="font-mono text-[10px] text-light-grey uppercase tracking-widest opacity-60">Draw something</span>
-            </div>
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                {colors.map(c => (
-                    <button
-                        key={c}
-                        onClick={() => setBrushColor(c)}
-                        className={`w-5 h-5 rounded-full border-2 transition-all ${brushColor === c ? 'border-white scale-125' : 'border-transparent'}`}
-                        style={{ backgroundColor: c }}
+        <div className="relative border border-mid-grey overflow-hidden bg-pure-black">
+            <div className="flex flex-col md:flex-row md:items-center justify-between p-4 gap-4 relative z-10 bg-pure-black/80 backdrop-blur-sm border-b border-mid-grey/20">
+                <span className="font-mono text-[10px] text-light-grey uppercase tracking-widest opacity-60">Neon Draw</span>
+                <div className="flex items-center gap-2 flex-wrap">
+                    {colors.map(c => (
+                        <button
+                            key={c}
+                            onClick={() => setBrushColor(c)}
+                            className={`w-5 h-5 rounded-full border-2 transition-all ${brushColor === c ? 'border-white scale-125' : 'border-transparent'}`}
+                            style={{ backgroundColor: c }}
+                        />
+                    ))}
+                    <input
+                        type="range" min="1" max="20" value={brushSize}
+                        onChange={e => setBrushSize(Number(e.target.value))}
+                        className="w-16 h-1 ml-2 accent-accent"
                     />
-                ))}
-                <input
-                    type="range" min="1" max="20" value={brushSize}
-                    onChange={e => setBrushSize(Number(e.target.value))}
-                    className="w-16 h-1 ml-2 accent-accent"
-                />
-                <button onClick={clear} className="font-mono text-[10px] text-mid-grey hover:text-accent transition-colors ml-2 uppercase">
-                    Clear
-                </button>
+                    <button onClick={clear} className="font-mono text-[10px] text-mid-grey hover:text-accent transition-colors ml-2 uppercase">
+                        Clear
+                    </button>
+                </div>
             </div>
             <canvas
                 ref={canvasRef}
-                className="w-full h-[400px] md:h-[500px] bg-pure-black cursor-crosshair"
+                className="w-full h-[400px] md:h-[500px] bg-pure-black cursor-crosshair touch-none"
                 onMouseDown={e => { drawing.current = true; lastPos.current = getPos(e); }}
                 onMouseMove={draw}
                 onMouseUp={() => { drawing.current = false; }}
                 onMouseLeave={() => { drawing.current = false; }}
+                onTouchStart={e => {
+                    drawing.current = true;
+                    const touch = e.touches[0];
+                    const rect = canvasRef.current!.getBoundingClientRect();
+                    lastPos.current = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+                }}
+                onTouchMove={e => {
+                    if (!drawing.current) return;
+                    const touch = e.touches[0];
+                    const rect = canvasRef.current!.getBoundingClientRect();
+                    const pos = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+                    const ctx = canvasRef.current?.getContext('2d');
+                    if (ctx) {
+                        ctx.beginPath();
+                        ctx.moveTo(lastPos.current.x, lastPos.current.y);
+                        ctx.lineTo(pos.x, pos.y);
+                        ctx.strokeStyle = brushColor;
+                        ctx.lineWidth = brushSize;
+                        ctx.lineCap = 'round';
+                        ctx.shadowBlur = brushSize * 3;
+                        ctx.shadowColor = brushColor;
+                        ctx.stroke();
+                        ctx.shadowBlur = 0;
+                        lastPos.current = pos;
+                    }
+                }}
+                onTouchEnd={() => { drawing.current = false; }}
             />
         </div>
     );
@@ -530,14 +557,14 @@ const GearheadQuiz = () => {
     // Pre-Game Menu State
     if (quizQuestions.length === 0) {
         return (
-            <div className="relative border border-mid-grey bg-[#0A0A0A] h-[400px] md:h-[500px] p-6 md:p-12 flex flex-col items-center justify-center text-center group">
+            <div className="relative border border-mid-grey bg-[#0A0A0A] h-[550px] md:h-[500px] p-6 md:p-12 flex flex-col items-center justify-center text-center group overflow-hidden">
                 <div className="absolute top-4 left-4 z-10 font-mono text-[10px] text-accent uppercase tracking-widest opacity-80">
-                    Gearhead Diagnostic System Initiated
+                    Diagnostic System
                 </div>
                 
-                <h2 className="font-display text-3xl md:text-5xl text-off-white mb-6">Select Challenge Protocol</h2>
-                <p className="font-body text-light-grey mb-10 max-w-sm">
-                    How deep does your car knowledge go? From vintage Group B legends to modern hypercars and JDM unicorns.
+                <h2 className="font-display text-2xl md:text-5xl text-off-white mb-4 md:mb-6">Challenge Protocol</h2>
+                <p className="font-body text-sm md:text-base text-light-grey mb-6 md:mb-10 max-w-sm">
+                    How deep does your car knowledge go? From vintage Group B legends to hypercars.
                 </p>
 
                 <div className="flex flex-col md:flex-row gap-4 w-full max-w-lg">
@@ -592,7 +619,7 @@ const GearheadQuiz = () => {
     const { q, opts, a, fact } = quizQuestions[qIndex];
 
     return (
-        <div className="relative border border-mid-grey bg-[#0A0A0A] h-[500px] md:h-[600px] p-6 md:p-12 flex flex-col group overflow-y-auto overflow-x-hidden">
+        <div className="relative border border-mid-grey bg-[#0A0A0A] h-[550px] md:h-[600px] p-6 md:p-12 flex flex-col group overflow-y-auto overflow-x-hidden">
             <div className="absolute top-4 left-4 font-mono text-[10px] text-accent uppercase tracking-widest">
                 Gearhead Diagnostic // Q:{qIndex + 1}/{quizQuestions.length}
             </div>

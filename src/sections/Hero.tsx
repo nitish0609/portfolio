@@ -93,7 +93,7 @@ export const Hero = () => {
     return (
         <section
             id="hero"
-            className="min-h-screen flex items-center justify-center px-6 md:px-12 relative overflow-hidden bg-pure-black"
+            className="min-h-[85svh] md:min-h-screen flex flex-col justify-start md:items-center md:justify-center pt-20 md:pt-0 px-6 md:px-12 relative overflow-hidden bg-pure-black"
         >
             {/* Background Effects */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -184,38 +184,45 @@ export const Hero = () => {
                 </AnimatePresence>
             </div>
 
-            {/* Available for Work Badge */}
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="absolute top-8 left-8 md:left-12 z-20"
-            >
-                <div className="flex items-center gap-2 px-3 py-1.5 border border-accent/30 rounded-full bg-accent/5 backdrop-blur-sm">
-                    <span className="relative flex h-2 w-2">
+            {/* Unified Responsive Header */}
+            <div className="absolute top-6 left-6 right-6 md:top-8 md:left-12 md:right-12 z-20 pointer-events-none flex flex-row items-center justify-between">
+                {/* Left Side: Badge */}
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="flex items-center gap-2 px-2 py-1 md:px-3 md:py-1.5 border border-accent/20 md:border-accent/30 rounded-full bg-accent/5 backdrop-blur-sm w-fit pointer-events-auto"
+                >
+                    <span className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-accent" />
                     </span>
-                    <span className="font-mono text-[10px] text-accent uppercase tracking-widest">
-                        Available for work
+                    <span className="font-mono text-[8px] md:text-[10px] text-accent uppercase tracking-widest whitespace-nowrap">
+                        Available <span className="hidden md:inline">for work</span>
                     </span>
-                </div>
-            </motion.div>
+                </motion.div>
 
-            {/* Real-time clock */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1 }}
-                className="absolute top-8 right-8 md:right-12 z-20 pointer-events-none"
-            >
-                <div className="text-right">
-                    <div className="font-mono text-[10px] text-mid-grey uppercase tracking-[0.3em] mb-1">
+                {/* Right Side: Clock + Location (Clock only on mobile, Both on desktop) */}
+                <div className="flex flex-col items-end gap-0.5 md:gap-1 mr-12 md:mr-0">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1 }}
+                        className="font-mono text-base md:text-3xl text-accent tabular-nums opacity-60 md:opacity-80"
+                    >
+                        {istTime}
+                    </motion.div>
+                    
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1 }}
+                        className="hidden md:block font-mono text-[10px] text-mid-grey uppercase tracking-[0.3em] whitespace-nowrap"
+                    >
                         Node_Mumbai_IN
-                    </div>
-                    <div className="font-mono text-3xl text-accent tabular-nums opacity-60">{istTime}</div>
+                    </motion.div>
                 </div>
-            </motion.div>
+            </div>
 
             <div className="relative z-10 w-full max-w-7xl">
                 {/* Personality Tagline */}
@@ -223,7 +230,7 @@ export const Hero = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="mb-12 flex items-center relative z-20"
+                    className="mb-6 md:mb-12 flex items-center relative z-20"
                 >
                     <div className="flex gap-4 font-mono text-tiny text-light-grey tracking-widest uppercase items-center">
                         <motion.span
@@ -253,7 +260,7 @@ export const Hero = () => {
                 </motion.div>
 
                 {/* Massive Kinetic Typography */}
-                <div className="mb-16">
+                <div className="mb-3 md:mb-16">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -278,7 +285,7 @@ export const Hero = () => {
                 </div>
 
                 {/* Human Copy */}
-                <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-start md:items-end">
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-12 items-start md:items-end">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -294,30 +301,30 @@ export const Hero = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.8 }}
-                            className="flex flex-col gap-6"
+                            className="flex flex-col gap-4 md:gap-6"
                         >
                             <p className="font-mono text-sm text-light-grey leading-relaxed max-w-md">
                                 Building AI-driven products and heavily pushing code daily. For my formal professional history as a Technical Product Manager, you can <a href="https://www.linkedin.com/in/nitish-pandey-70a21016a/" target="_blank" rel="noreferrer" className="text-accent hover:underline">check my LinkedIn</a>. Currently open to collaborate on cool projects.
                             </p>
 
-                        <div className="flex gap-8">
+                        <div className="flex gap-6 mt-1 md:mt-0">
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                <span className="font-mono text-[8px] text-mid-grey uppercase tracking-widest">
                                     Stack
                                 </span>
-                                <span className="font-mono text-xs text-off-white">M.E.R.N</span>
+                                <span className="font-mono text-[10px] text-off-white">M.E.R.N</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                <span className="font-mono text-[8px] text-mid-grey uppercase tracking-widest">
                                     Focus
                                 </span>
-                                <span className="font-mono text-xs text-off-white">AI Products</span>
+                                <span className="font-mono text-[10px] text-off-white">AI Products</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                <span className="font-mono text-[8px] text-mid-grey uppercase tracking-widest">
                                     Base
                                 </span>
-                                <span className="font-mono text-xs text-off-white">Mumbai</span>
+                                <span className="font-mono text-[10px] text-off-white">Mumbai</span>
                             </div>
                         </div>
                     </motion.div>
@@ -328,7 +335,7 @@ export const Hero = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 1.2 }}
-                    className="mt-24 flex justify-between items-center border-t border-mid-grey/30 pt-8"
+                    className="mt-6 md:mt-24 flex justify-between items-center border-t border-mid-grey/30 pt-4 md:pt-8"
                 >
                     <div className="font-mono text-[10px] text-mid-grey flex items-center gap-4">
                         <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />

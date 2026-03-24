@@ -39,14 +39,14 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
                 setBootLines(prev => [...prev, BOOT_LINES[lineIndex]]);
                 lineIndex++;
             }
-            p += 4;
+            p += 20;
             if (p <= 100) setProgress(p);
             
             if (lineIndex >= BOOT_LINES.length && p >= 100) {
                 clearInterval(interval);
-                setTimeout(onComplete, 400);
+                onComplete();
             }
-        }, 80);
+        }, 25);
 
         return () => clearInterval(interval);
     }, []); // Empty deps to keep it single-run and stable

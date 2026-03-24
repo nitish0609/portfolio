@@ -39,7 +39,7 @@ export const Navigation = () => {
 
     return (
         <>
-            {/* Desktop nav — top right pill */}
+            {/* Desktop nav . top right pill */}
             <motion.nav
                 initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}

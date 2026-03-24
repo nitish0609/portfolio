@@ -251,7 +251,7 @@ export const Connect = () => {
                                     ) : status === 'error' ? (
                                         <>
                                             <AlertCircle className="w-4 h-4" />
-                                            <span>Failed — Try Again</span>
+                                            <span>Failed . Try Again</span>
                                         </>
                                     ) : (
                                         <>

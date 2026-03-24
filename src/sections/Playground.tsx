@@ -671,7 +671,7 @@ export const Playground = () => {
                     <GlitchHeader title="PLAYGROUND" subtitle="Interactive_Experiments" />
                     <p className="font-body text-lg text-light-grey mt-6 max-w-2xl mb-12">
                         I believe the best UI is the one you want to <span className="text-accent italic">touch</span>.
-                        Here are some interactive experiments — go ahead, play around.
+                        Here are some interactive experiments . go ahead, play around.
                     </p>
                 </ScrollReveal>
 
@@ -716,7 +716,7 @@ export const Playground = () => {
                     <div className="mt-8 flex items-center gap-4">
                         <div className="h-[1px] flex-1 bg-mid-grey/30" />
                         <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
-                            Built with Canvas API & Framer Motion — zero external libs
+                            Built with Canvas API & Framer Motion . zero external libs
                         </span>
                         <div className="h-[1px] flex-1 bg-mid-grey/30" />
                     </div>

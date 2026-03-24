@@ -40,7 +40,7 @@ export const Gallery = () => {
                     <div className="mb-20 overflow-visible">
                         <GlitchHeader title="AUTOMOTIVE" subtitle="Through My Lens" />
                         <p className="font-body text-lg text-off-white mt-6 max-w-2xl">
-                            Cars are more than just machines—they're engineering as art. I shoot them to capture the form and the light that usually goes unnoticed.
+                            Cars are more than just machines . they're engineering as art. I shoot them to capture the form and the light that usually goes unnoticed.
                             <span className="text-light-grey italic block mt-2"> Low on edits, high on soul.</span>
                         </p>
                     </div>

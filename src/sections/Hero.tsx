@@ -285,20 +285,20 @@ export const Hero = () => {
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
                         <p className="font-body text-2xl md:text-3xl text-off-white leading-tight font-light max-w-xl">
-                            Build AI products, write code daily, shoot cars for fun, and take my coffee{' '}
-                            <span className="italic text-accent">way</span> too seriously.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, delay: 0.8 }}
-                        className="flex flex-col gap-6"
-                    >
-                        <p className="font-mono text-sm text-light-grey leading-relaxed max-w-md">
-                            Building AI-driven products and heavily pushing code daily. For my formal professional history as a Technical Product Manager, you can <a href="https://www.linkedin.com/in/nitish-pandey-70a21016a/" target="_blank" rel="noreferrer" className="text-accent hover:underline">check my LinkedIn</a>. Currently open to collaborate on cool projects.
-                        </p>
+                                Build AI products, optimize architectures, shoot cars for fun, and take my coffee{' '}
+                                <span className="italic text-accent">way</span> too seriously.
+                            </p>
+                        </motion.div>
+    
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.8 }}
+                            className="flex flex-col gap-6"
+                        >
+                            <p className="font-mono text-sm text-light-grey leading-relaxed max-w-md">
+                                Building AI-driven products and heavily pushing code daily. For my formal professional history as a Technical Product Manager, you can <a href="https://www.linkedin.com/in/nitish-pandey-70a21016a/" target="_blank" rel="noreferrer" className="text-accent hover:underline">check my LinkedIn</a>. Currently open to collaborate on cool projects.
+                            </p>
 
                         <div className="flex gap-8">
                             <div className="flex flex-col">

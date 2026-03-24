@@ -88,7 +88,21 @@ const BentoCard = ({ section }: { section: typeof techEcosystem[0] }) => {
             <div className="relative z-10 flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-4">
-                    <span className="text-3xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">{section.icon}</span>
+                    <motion.span 
+                        animate={{ 
+                            y: [0, -5, 0],
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, -5, 0]
+                        }}
+                        transition={{ 
+                            duration: 4, 
+                            repeat: Infinity, 
+                            ease: "easeInOut" 
+                        }}
+                        className="text-3xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+                    >
+                        {section.icon}
+                    </motion.span>
                     <h3 className="font-display text-2xl text-off-white group-hover:text-accent transition-colors duration-300">
                         {section.category}
                     </h3>

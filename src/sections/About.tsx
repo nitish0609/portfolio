@@ -91,7 +91,31 @@ const InterestCard = ({ title, icon, description, bgEffect, tags }: {
 
 /* ─── Ticker tape easter egg ─── */
 const TickerTape = () => {
-    const items = ['COFFEE_LEVEL: HIGH', '☕', 'COMMIT_STREAK: 147', '⚡', 'BUGS_SQUASHED: ∞', '🏎️', 'DARK_MODE_ONLY', '💻', 'AI_POWERED', '📸'];
+    const EmojiAnimation = ({ children }: { children: React.ReactNode }) => (
+        <motion.span
+            animate={{ 
+                y: [0, -4, 0],
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0]
+            }}
+            transition={{ 
+                duration: 3, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+            }}
+            style={{ display: 'inline-block', margin: '0 4px' }}
+        >
+            {children}
+        </motion.span>
+    );
+
+    const items = [
+        'COFFEE_LEVEL: HIGH', '☕', 
+        'COMMIT_STREAK: 147', '⚡', 
+        'BUGS_SQUASHED: ∞', '🏎️', 
+        'DARK_MODE_ONLY', '💻', 
+        'AI_POWERED', '📸'
+    ];
 
     return (
         <div className="overflow-hidden py-4 border-y border-mid-grey/20 my-12 relative">
@@ -101,8 +125,10 @@ const TickerTape = () => {
                 className="flex gap-12 whitespace-nowrap"
             >
                 {[...items, ...items, ...items].map((item, i) => (
-                    <span key={i} className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
-                        {item}
+                    <span key={i} className="font-mono text-[10px] text-mid-grey uppercase tracking-widest flex items-center">
+                        {['☕', '⚡', '🏎️', '💻', '📸'].includes(item) ? (
+                            <EmojiAnimation>{item}</EmojiAnimation>
+                        ) : item}
                     </span>
                 ))}
             </motion.div>
@@ -155,7 +181,7 @@ export const About = () => {
                                     <line x1="28" y1="8" x2="20" y2="40" strokeLinecap="round" />
                                 </svg>
                             }
-                            description="I live in the terminal. Building AI agents, writing full-stack apps, and automating everything that breathes. Code is not just work — it's how I think."
+                            description="I live in the terminal. Building AI agents, writing full-stack apps, and automating everything that breathes. Code is not just work. It's how I think."
                             bgEffect={
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -280,7 +306,13 @@ export const About = () => {
                             </div>
                             <div className="font-mono text-xs text-light-grey/80 space-y-2 mb-6">
                                 <p><span className="text-accent">$</span> whoami</p>
-                                <p className="text-off-white pl-2">nitish — builder of things</p>
+                                <motion.p 
+                                    animate={{ opacity: [0.7, 1, 0.7] }}
+                                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                    className="text-off-white pl-2"
+                                >
+                                    nitish . builder of things
+                                </motion.p>
                                 <p><span className="text-accent">$</span> cat interests.txt</p>
                                 <p className="text-off-white pl-2">AI, full-stack dev, cars, photography, coffee</p>
                                 <p><span className="text-accent">$</span> echo $MOOD</p>

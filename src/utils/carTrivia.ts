@@ -221,7 +221,7 @@ export const carTriviaBank = [
         q: "Which hypercar uses a revolutionary 'FreeValve' camless engine technology developed by Koenigsegg?",
         opts: ["Jesko", "Regera", "Gemera", "Agera RS"],
         a: 2,
-        fact: "The 4-seat Gemera features the 'Tiny Friendly Giant' — a 2.0L 3-cylinder twin-turbo engine with no camshafts that makes 600hp."
+        fact: "The 4-seat Gemera features the 'Tiny Friendly Giant' . a 2.0L 3-cylinder twin-turbo engine with no camshafts that makes 600hp."
     },
     {
         q: "The Aston Martin DB5 is eternally linked to which fictional character?",

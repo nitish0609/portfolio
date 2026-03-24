@@ -1,7 +1,8 @@
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
 
-const MagneticCharacter = ({ char }: { char: string, index: number }) => {
+const MagneticCharacter = ({ char }: { char: string; index: number }) => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -60,33 +61,41 @@ export const Hero = () => {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: false
+        hour12: false,
     });
 
-    const firstCharArr = "NITISH".split("");
-    const secondCharArr = "PANDEY".split("");
+    const firstCharArr = 'NITISH'.split('');
+    const secondCharArr = 'PANDEY'.split('');
 
-    // Stabilize random positions to prevent jumping on every re-render (since clock updates every second)
-    const carsLines = useRef([...Array(20)].map(() => ({
-        top: Math.random() * 100,
-        delay: Math.random() * 0.4
-    })));
+    const carsLines = useRef(
+        [...Array(20)].map(() => ({
+            top: Math.random() * 100,
+            delay: Math.random() * 0.4,
+        }))
+    );
 
-    const codeTraces = useRef([...Array(20)].map(() => ({
-        marginLeft: Math.random() * 80,
-        marginTop: Math.random() * 5,
-        delay: Math.random() * 4
-    })));
+    const codeTraces = useRef(
+        [...Array(20)].map(() => ({
+            marginLeft: Math.random() * 80,
+            marginTop: Math.random() * 5,
+            delay: Math.random() * 4,
+        }))
+    );
 
-    const coffeeSteam = useRef([...Array(15)].map(() => ({
-        left: Math.random() * 100,
-        x: Math.random() * 100 - 50,
-        delay: Math.random() * 5
-    })));
+    const coffeeSteam = useRef(
+        [...Array(15)].map(() => ({
+            left: Math.random() * 100,
+            x: Math.random() * 100 - 50,
+            delay: Math.random() * 5,
+        }))
+    );
 
     return (
-        <section id="hero" className="min-h-screen flex items-center justify-center px-6 md:px-12 relative overflow-hidden bg-pure-black">
-            {/* Global Background Effects layer - Moved to top for depth */}
+        <section
+            id="hero"
+            className="min-h-screen flex items-center justify-center px-6 md:px-12 relative overflow-hidden bg-pure-black"
+        >
+            {/* Background Effects */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <AnimatePresence>
                     {activeEffect === 'cars' && (
@@ -105,7 +114,7 @@ export const Hero = () => {
                                         duration: 0.3,
                                         repeat: Infinity,
                                         delay: line.delay,
-                                        ease: "linear"
+                                        ease: 'linear',
                                     }}
                                     className="absolute h-[1px] bg-accent/30 w-96 shadow-[0_0_10px_rgba(191,255,0,0.5)]"
                                     style={{ top: `${line.top}%` }}
@@ -127,13 +136,13 @@ export const Hero = () => {
                                     animate={{
                                         x: [0, 20, 0],
                                         opacity: [0.1, 0.4, 0.1],
-                                        y: [0, 10, 0]
+                                        y: [0, 10, 0],
                                     }}
                                     transition={{ duration: 4, repeat: Infinity, delay: trace.delay }}
                                     className="mb-2 whitespace-nowrap"
                                     style={{
                                         marginLeft: `${trace.marginLeft}%`,
-                                        marginTop: `${trace.marginTop}%`
+                                        marginTop: `${trace.marginTop}%`,
                                     }}
                                 >
                                     {`system_trace >> node_${i}: OK [0x${Math.random().toString(16).slice(2, 6)}]`}
@@ -157,13 +166,13 @@ export const Hero = () => {
                                         y: -1000,
                                         opacity: [0, 0.5, 0],
                                         x: [steam.x, -steam.x, steam.x],
-                                        scale: [1, 3, 5]
+                                        scale: [1, 3, 5],
                                     }}
                                     transition={{
                                         duration: 4,
                                         repeat: Infinity,
                                         delay: steam.delay,
-                                        ease: "easeOut"
+                                        ease: 'easeOut',
                                     }}
                                     className="absolute w-40 h-40 bg-accent/5 rounded-full blur-[80px]"
                                     style={{ left: `${steam.left}%` }}
@@ -175,7 +184,25 @@ export const Hero = () => {
                 </AnimatePresence>
             </div>
 
-            {/* Real-time clock - absolute info layer */}
+            {/* Available for Work Badge */}
+            <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="absolute top-8 left-8 md:left-12 z-20"
+            >
+                <div className="flex items-center gap-2 px-3 py-1.5 border border-accent/30 rounded-full bg-accent/5 backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+                    </span>
+                    <span className="font-mono text-[10px] text-accent uppercase tracking-widest">
+                        Available for work
+                    </span>
+                </div>
+            </motion.div>
+
+            {/* Real-time clock */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -186,13 +213,12 @@ export const Hero = () => {
                     <div className="font-mono text-[10px] text-mid-grey uppercase tracking-[0.3em] mb-1">
                         Node_Mumbai_IN
                     </div>
-                    <div className="font-mono text-3xl text-accent tabular-nums opacity-60">
-                        {istTime}
-                    </div>
+                    <div className="font-mono text-3xl text-accent tabular-nums opacity-60">{istTime}</div>
                 </div>
             </motion.div>
+
             <div className="relative z-10 w-full max-w-7xl">
-                {/* Personality Tagline with Global Vibe Sync */}
+                {/* Personality Tagline */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -251,7 +277,7 @@ export const Hero = () => {
                     </motion.h1>
                 </div>
 
-                {/* Human Copy - No Corporate Jargon */}
+                {/* Human Copy */}
                 <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-start md:items-end">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -259,7 +285,8 @@ export const Hero = () => {
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
                         <p className="font-body text-2xl md:text-3xl text-off-white leading-tight font-light max-w-xl">
-                            Build AI products, write code daily, shoot cars for fun, and take my coffee <span className="italic text-accent">way</span> too seriously.
+                            Build AI products, write code daily, shoot cars for fun, and take my coffee{' '}
+                            <span className="italic text-accent">way</span> too seriously.
                         </p>
                     </motion.div>
 
@@ -270,27 +297,33 @@ export const Hero = () => {
                         className="flex flex-col gap-6"
                     >
                         <p className="font-mono text-sm text-light-grey leading-relaxed max-w-md">
-                            I lead the digital roadmap at The Hosteller by day, and push code by night. Currently open to collaborate on cool projects.
+                            Building AI-driven products and heavily pushing code daily. For my formal professional history as a Technical Product Manager, you can <a href="https://www.linkedin.com/in/nitish-pandey-70a21016a/" target="_blank" rel="noreferrer" className="text-accent hover:underline">check my LinkedIn</a>. Currently open to collaborate on cool projects.
                         </p>
 
                         <div className="flex gap-8">
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">Stack</span>
+                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                    Stack
+                                </span>
                                 <span className="font-mono text-xs text-off-white">M.E.R.N</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">Focus</span>
+                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                    Focus
+                                </span>
                                 <span className="font-mono text-xs text-off-white">AI Products</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">Base</span>
+                                <span className="font-mono text-[10px] text-mid-grey uppercase tracking-widest">
+                                    Base
+                                </span>
                                 <span className="font-mono text-xs text-off-white">Mumbai</span>
                             </div>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* Tech indicator */}
+                {/* System Status + Scroll CTA */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -301,6 +334,19 @@ export const Hero = () => {
                         <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                         SYSTEM_ACTIVE / MEMORY_READY
                     </div>
+
+                    {/* Scroll Down CTA */}
+                    <motion.button
+                        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="flex flex-col items-center gap-2 group cursor-hover"
+                        animate={{ y: [0, 6, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                        <span className="font-mono text-[10px] text-light-grey uppercase tracking-widest group-hover:text-accent transition-colors">
+                            Scroll
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-accent" />
+                    </motion.button>
                 </motion.div>
             </div>
         </section>

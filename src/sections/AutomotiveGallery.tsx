@@ -18,7 +18,6 @@ const photos = [
 ];
 
 export const Gallery = () => {
-    const [hoveredId, setHoveredId] = useState<number | null>(null);
     const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
     const [selectedImage, setSelectedImage] = useState<typeof photos[0] | null>(null);
 
@@ -51,12 +50,9 @@ export const Gallery = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-20">
                     {photos.map((photo) => (
                         <ScrollReveal key={photo.id}>
-                            <motion.div
-                                onHoverStart={() => setHoveredId(photo.id)}
-                                onHoverEnd={() => setHoveredId(null)}
+                            <div
                                 onClick={() => setSelectedImage(photo)}
-                                whileHover={{ y: -8 }}
-                                className="relative aspect-[4/5] bg-mid-grey border border-dark-grey hover:border-accent transition-all duration-500 cursor-hover group overflow-hidden"
+                                className="relative aspect-[4/5] bg-mid-grey border border-dark-grey hover:border-accent hover:-translate-y-2 transition-all duration-500 cursor-hover group overflow-hidden"
                             >
                                 {!loadedImages.has(photo.id) && (
                                     <div className="absolute inset-0 bg-mid-grey flex items-center justify-center">
@@ -68,16 +64,14 @@ export const Gallery = () => {
                                     alt={photo.title}
                                     loading="lazy"
                                     onLoad={() => handleImageLoad(photo.id)}
-                                    className={`w-full h-full object-cover transition-all duration-700 ${loadedImages.has(photo.id) ? 'opacity-100 scale-100' : 'opacity-0 scale-110 blur-sm'} group-hover:scale-110`}
+                                    className={`w-full h-full object-cover transition-transform duration-700 ease-out ${loadedImages.has(photo.id) ? 'opacity-100' : 'opacity-0'} group-hover:scale-105`}
                                 />
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: hoveredId === photo.id ? 1 : 0 }}
-                                    className="absolute inset-0 bg-pure-black/40 backdrop-blur-[2px] flex items-center justify-center"
-                                >
-                                    <span className="font-display text-4xl text-off-white">{photo.title}</span>
-                                </motion.div>
-                            </motion.div>
+                                <div className="absolute inset-0 bg-pure-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center">
+                                    <span className="font-display text-4xl text-off-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                        {photo.title}
+                                    </span>
+                                </div>
+                            </div>
                         </ScrollReveal>
                     ))}
                 </div>

@@ -64,13 +64,13 @@ export const CustomCursor = () => {
                     translateX: '-50%',
                     translateY: '-50%',
                 }}
-                className="fixed top-0 left-0 mix-blend-difference"
+                className="fixed top-0 left-0"
             >
                 <motion.div
                     animate={{
-                        width: isHovering ? 80 : 12,
-                        height: isHovering ? 80 : 12,
-                        backgroundColor: isDebugMode ? 'rgba(0, 0, 0, 0.8)' : (isHovering ? 'rgba(191, 255, 0, 0.4)' : '#BFFF00'),
+                        width: isHovering ? 60 : 16,
+                        height: isHovering ? 60 : 16,
+                        backgroundColor: isHovering ? 'rgba(191, 255, 0, 0.15)' : '#BFFF00',
                         borderRadius: isDebugMode ? '2px' : '50%',
                     }}
                     transition={{
@@ -78,19 +78,25 @@ export const CustomCursor = () => {
                         damping: 20,
                         stiffness: 150,
                     }}
-                    className={`flex items-center justify-center border ${isDebugMode ? 'border-accent text-accent' : 'border-accent/30'}`}
+                    className={`flex items-center justify-center border-2 ${
+                        isDebugMode 
+                            ? 'border-accent text-accent bg-pure-black/80' 
+                            : isHovering 
+                                ? 'border-accent' 
+                                : 'border-pure-black'
+                    }`}
                 >
                     {isHovering && !isDebugMode && (
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="w-2 h-2 bg-accent rounded-full"
+                            className="w-2 h-2 bg-accent rounded-full shadow-[0_0_10px_#BFFF00]"
                         />
                     )}
                     {isDebugMode && (
                         <div className="font-mono text-[6px] tabular-nums flex flex-col items-center">
                             <span>{Math.round(mouseX.get())}</span>
-                            <div className="w-4 h-[1px] bg-accent/30 my-[1px]" />
+                            <div className="w-4 h-[1px] bg-accent/50 my-[1px]" />
                             <span>{Math.round(mouseY.get())}</span>
                         </div>
                     )}

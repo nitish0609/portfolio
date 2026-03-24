@@ -1,5 +1,7 @@
 import { ScrollReveal } from '../components/ScrollReveal';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { GlitchHeader } from '../components/GlitchHeader';
+import { useRef } from 'react';
 
 const timeline = [
     {
@@ -8,6 +10,7 @@ const timeline = [
         role: 'Intern',
         company: 'C-DAC',
         description: 'Where it all started. Learning to code, breaking things, fixing them, and repeating the cycle.',
+        accent: false,
     },
     {
         version: 'v1.0_Foundation',
@@ -15,6 +18,7 @@ const timeline = [
         role: 'Project Engineer',
         company: 'Wipro',
         description: 'First real professional deployment. Learned what "production scale" really looks like in the enterprise world.',
+        accent: false,
     },
     {
         version: 'v2.0_Optimization',
@@ -22,6 +26,7 @@ const timeline = [
         role: 'Fullstack Dev',
         company: 'The Hosteller',
         description: 'Joined the startup grind. Built features, shipped at velocity, and fell in love with product execution.',
+        accent: false,
     },
     {
         version: 'v2.4_Senior_Scale',
@@ -29,6 +34,7 @@ const timeline = [
         role: 'Senior Engineer',
         company: 'The Hosteller',
         description: 'Scaled systems and took ownership of core features. Managed the bridge between code and product.',
+        accent: false,
     },
     {
         version: 'v3.0_TPM_Protocol',
@@ -36,60 +42,87 @@ const timeline = [
         role: 'Technical Product Manager',
         company: 'The Hosteller',
         description: 'Managing the digital roadmap while still pushing code daily. The perfect hybrid protocol.',
+        accent: true,
     },
 ];
 
+const TimelineItem = ({ item, index }: { item: typeof timeline[0]; index: number }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start end', 'center center'],
+    });
+    const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+
+    return (
+        <ScrollReveal delay={index * 0.08}>
+            <motion.div
+                ref={ref}
+                whileHover={{ x: 10 }}
+                transition={{ duration: 0.3 }}
+                className="relative pl-8 md:pl-16 group"
+            >
+                {/* Animated fill line */}
+                <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-mid-grey/30">
+                    <motion.div
+                        className="absolute left-0 top-0 w-full bg-accent"
+                        style={{ height: lineHeight }}
+                    />
+                </div>
+
+                {/* Dot */}
+                <div className={`absolute -left-[5px] top-3 w-2.5 h-2.5 rounded-full border-2 border-pure-black transition-colors duration-500 ${
+                    item.accent ? 'bg-accent shadow-[0_0_12px_rgba(191,255,0,0.5)]' : 'bg-mid-grey group-hover:bg-accent'
+                }`} />
+
+                <div className="pb-10 md:pb-14">
+                    <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
+                        <span className="text-accent font-mono text-[10px] tracking-widest uppercase">
+                            {item.version}
+                        </span>
+                        <h3 className={`text-3xl md:text-5xl font-display ${item.accent ? 'text-accent' : 'text-off-white'}`}>
+                            {item.role}
+                        </h3>
+                        <span className="text-light-grey font-mono text-xs opacity-60 md:ml-auto">{item.year}</span>
+                    </div>
+                    <p className="text-lg text-accent/80 font-mono mb-4">{item.company}</p>
+                    <p className="text-light-grey text-lg max-w-3xl leading-relaxed font-body font-light">
+                        {item.description}
+                    </p>
+                </div>
+            </motion.div>
+        </ScrollReveal>
+    );
+};
+
 export const Journey = () => {
     return (
-        <section id="journey" className="min-h-screen flex items-center px-6 md:px-12 py-20 bg-pure-black">
+        <section id="journey" className="min-h-screen px-6 md:px-12 py-20 md:py-32 bg-dark-grey relative overflow-hidden">
+            {/* Background version watermarks */}
+            <div className="absolute top-20 right-0 font-display text-[20rem] text-mid-grey opacity-[0.02] select-none pointer-events-none leading-none">
+                V3
+            </div>
+
             <div className="max-w-7xl mx-auto w-full">
                 <ScrollReveal>
-                    <div className="mb-20">
-                        <span className="text-accent font-mono text-xs uppercase tracking-widest">The Roadmap</span>
-                        <h2 className="font-display text-7xl md:text-massive text-off-white mt-4">
-                            JOURNEY
-                        </h2>
-                    </div>
+                    <GlitchHeader title="JOURNEY" subtitle="The_Roadmap" />
                 </ScrollReveal>
 
-                <div className="space-y-6 md:space-y-10">
+                <div className="mt-16 space-y-0">
                     {timeline.map((item, index) => (
-                        <ScrollReveal key={index} delay={index * 0.1}>
-                            <motion.div
-                                whileHover={{ x: 10 }}
-                                transition={{ duration: 0.3 }}
-                                className="relative pl-8 md:pl-16 border-l border-mid-grey hover:border-accent transition-all duration-500 group"
-                            >
-                                {/* Timeline accent */}
-                                <div className="absolute left-0 top-0 w-[1px] h-0 group-hover:h-full bg-accent transition-all duration-500" />
-                                <div className="absolute -left-[5px] top-2 w-2 h-2 bg-mid-grey group-hover:bg-accent border border-pure-black rounded-full transition-colors" />
-
-                                <div className="pb-8 md:pb-12">
-                                    <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
-                                        <span className="text-accent font-mono text-[10px] tracking-widest uppercase">{item.version}</span>
-                                        <h3 className="text-3xl md:text-5xl font-display text-off-white">
-                                            {item.role}
-                                        </h3>
-                                        <span className="text-light-grey font-mono text-xs opacity-60 md:ml-auto">{item.year}</span>
-                                    </div>
-                                    <p className="text-lg text-accent/80 font-mono mb-4">{item.company}</p>
-                                    <p className="text-light-grey text-lg max-w-3xl leading-relaxed font-body font-light">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        </ScrollReveal>
+                        <TimelineItem key={index} item={item} index={index} />
                     ))}
                 </div>
 
                 <ScrollReveal delay={0.6}>
-                    <div className="mt-20 p-10 bg-dark-grey border border-mid-grey relative overflow-hidden group">
+                    <div className="mt-20 p-10 bg-pure-black border border-mid-grey relative overflow-hidden group">
                         <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
                             <p className="font-display text-3xl md:text-4xl text-off-white leading-tight">
                                 Still coding. Still building.<br />
                                 <span className="text-accent italic font-light text-2xl md:text-3xl">The hybrid mindset never stops.</span>
                             </p>
-                            <div className="font-mono text-[10px] text-light-grey uppercase tracking-widest">
+                            <div className="font-mono text-[10px] text-light-grey uppercase tracking-widest flex items-center gap-3">
+                                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
                                 Status: Active_Development
                             </div>
                         </div>
